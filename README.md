@@ -1,0 +1,1 @@
+the app is about orchesterizing  a flask app that has been dockerized

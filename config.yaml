@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskweb-deployment
+  labels:
+    app: flaskweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaskweb
+  template:
+    metadata:
+      labels:
+        app: flaskweb
+    spec:
+      containers:
+      - name: flaskweb
+        image: bopgeek/flask-web:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  selector:
+    app: flaskweb
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  type: LoadBalancer
