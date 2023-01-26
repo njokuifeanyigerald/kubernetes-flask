@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: bopgeek/flask-web:v1
+  pullPolicy: IfNotPresent
+  
+
+service:
+  type: LoadBalancer
+  port: 5001
+  targetPort: 5000
+  protocol: TCP
+  name: flask-svc
+
+container:
+  name: flaskweb
+  containerPort: 5000

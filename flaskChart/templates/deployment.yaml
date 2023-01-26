@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # i wanna use the release name
+  name: {{ .Release.Name}}
+  labels:
+    {{- include "flaskChart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "flaskChart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "flaskChart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.container.name }}
+        image: {{ .Values.image.repository | quote }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: {{ .Values.container.containerPort}}
