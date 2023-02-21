@@ -30,12 +30,12 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push',  'us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s/k8s:${SHORT_SHA}']
 
-# # Deploy to Cloud Run
-# - name: google/cloud-sdk
-#   args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
-#           '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/testing:${SHORT_SHA}', 
-#           '--region', 'us-central1', '--platform', 'managed', 
-#           '--allow-unauthenticated']
+# Deploy to Cloud Run
+- name: google/cloud-sdk
+  args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
+          '--image=us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s/k8s:${SHORT_SHA}', 
+          '--region', 'us-central1', '--platform', 'managed', 
+          '--allow-unauthenticated']
 
 
 # # deploy container image to GKE
