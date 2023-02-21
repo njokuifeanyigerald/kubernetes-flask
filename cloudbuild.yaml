@@ -1,0 +1,83 @@
+steps:
+# # Invoke and write Flask Secrets to app.yaml
+# - name: "gcr.io/cloud-builders/gcloud"
+#   secretEnv: ['SECRET_KEY', 'SECRET_MANAGER_ID', 'CRED_JSON']
+#   entrypoint: 'bash'
+#   args:
+#   - -c
+#   - |
+#     echo $'\n  SECRET_KEY: '$$SECRET_KEY >> app.yaml
+#     echo $'\n  SECRET_MANAGER_ID: '$$SECRET_MANAGER_ID >> app.yaml
+#     echo $$CRED_JSON > cred.json
+
+
+
+
+
+# Install dependencies
+- name: python
+  entrypoint: pip
+  args: ["install", "-r", "requirements.txt", "--user"]
+
+# Run unit tests
+- name: python
+  entrypoint: python
+  args: ["-m", "pytest", "--junitxml=${SHORT_SHA}_test_log.xml"] 
+
+# # Docker Build
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', 
+#           'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}', '.']
+
+# # Docker push to Google Artifact Registry
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}']
+
+# # Deploy to Cloud Run
+# - name: google/cloud-sdk
+#   args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
+#           '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}', 
+#           '--region', 'us-central1', '--platform', 'managed', 
+#           '--allow-unauthenticated']
+
+
+# # deploy container image to GKE
+# - name: "gcr.io/cloud-builders/gke-deploy"
+#   args:
+#   - run
+#   - --filename=kubernetes-resource-file
+#   - --image=gcr.io/project-id/image:tag
+#   - --location=${_CLOUDSDK_COMPUTE_ZONE}
+#   - --cluster=${_CLOUDSDK_CONTAINER_CLUSTER}
+
+
+# # FOR STUDY
+
+#   # build the container image
+# - name: "gcr.io/cloud-builders/docker"
+#   args: ["build", "-t", "gcr.io/project-id/image:tag", "."]
+#   # push container image
+# - name: "gcr.io/cloud-builders/docker"
+#   args: ["push", "gcr.io/project-id/image:tag"]
+#   # deploy container image to GKE
+# - name: "gcr.io/cloud-builders/gke-deploy"
+#   args:
+#   - run
+#   - --filename=kubernetes-resource-file
+#   - --image=gcr.io/project-id/image:tag
+#   - --location=location
+#   - --cluster=cluster
+
+# # Store images in Google Artifact Registry 
+# images:
+#   - us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/myimage:${SHORT_SHA}
+
+
+# availableSecrets:
+#   secretManager:
+#   - versionName: ${_SECRET_KEY_VERSION_URL}
+#     env: 'SECRET_KEY'
+#   - versionName: ${_SECRET_MANAGER_VERSION_ID}
+#     env: 'SECRET_MANAGER_ID'
+#   - versionName: ${_CRED_JSON}
+#     env: 'CRED_JSON'
