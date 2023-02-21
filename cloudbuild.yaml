@@ -44,8 +44,8 @@ steps:
   - run
   - --filename=config.yaml
   - --image=us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s/k8s:${SHORT_SHA}
-  - --location=${us-central1}
-  - --cluster=${devops-testing}
+  - --location=us-central1-a
+  - --cluster=devops-testing
 
 
 # # FOR STUDY
