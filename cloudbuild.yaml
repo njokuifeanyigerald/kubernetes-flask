@@ -28,7 +28,7 @@ steps:
 
 # Docker push to Google Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push',  'us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s:${SHORT_SHA}']
+  args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/precise-tube-378416/flaks-k8s:${SHORT_SHA}']
 
 # # Deploy to Cloud Run
 # - name: google/cloud-sdk
