@@ -23,12 +23,12 @@ steps:
 # Docker Build
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 
-         'us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s:${SHORT_SHA}', '.']
+         'us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s/k8s:${SHORT_SHA}', '.']
           
 
 # Docker push to Google Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/precise-tube-378416/flaks-k8s:${SHORT_SHA}']
+  args: ['push',  'us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s/k8s:${SHORT_SHA}']
 
 # # Deploy to Cloud Run
 # - name: google/cloud-sdk
