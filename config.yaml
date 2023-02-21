@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flaskweb
-        image: bopgeek/flask-web:v1
+        image: us-central1-docker.pkg.dev/precise-tube-378416/flaks-k8s/k8s:${SHORT_SHA}
         resources:
           limits:
             memory: "128Mi"
